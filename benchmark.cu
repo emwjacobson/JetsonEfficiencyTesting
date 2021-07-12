@@ -4,11 +4,14 @@
 #include <cublas_v2.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <thread>
+#include <vector>
+#include "jetson_clocks.hpp/jetson_clocks.hpp"
 
 // This file measures the FLOPS that can be achieved by using gemm functions.
 // This is intended to measure performance when the GPU is at different frequencies.
 
-#define RUNTIME 30 // In seconds
+#define RUNTIME 20 // In seconds
 #define USE_SOCKET
 
 template <typename T>
@@ -194,14 +197,14 @@ void benchmark(int sock, int min_dim, int max_dim) {
     // https://forums.developer.nvidia.com/t/how-to-confirm-whether-tensor-core-is-working-or-not/70263/8
 
     // This is the "non-tensor" version using the individual cublas<t>gemm functions
-    for (int dim = min_dim; dim <= max_dim; dim += 64) {
-        printf("Matrix %d - ", dim);
+    for (int dim = min_dim; dim <= max_dim; dim += 128) {
+        printf("Matrix %d (Non-tensor) - ", dim);
         cudaEventRecord(gpu_start);
 
         #ifdef USE_SOCKET
         // START,datatype,dim_size,nontensor
         // eg. START,half,256,nontensor
-        msg = "START," + get_datatype(h_A) + "," + std::to_string(dim) + ",nontensor";
+        msg = "START," + get_datatype(h_A) + "," + std::to_string(dim) + ",nontensor," + std::to_string(jetson_clocks::get_gpu_cur_freq());
         send(sock, msg.c_str(), strlen(msg.c_str()), 0);
         #endif
 
@@ -223,17 +226,20 @@ void benchmark(int sock, int min_dim, int max_dim) {
         msg = "DONE," + std::to_string(final_flops);
         send(sock, msg.c_str(), strlen(msg.c_str()), 0);
         #endif
+
+        printf("Sleeping between tests...\n");
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     }
 
     // This is the "tensor" version using cublasGemmEx
-    for (int dim = min_dim; dim <= max_dim; dim += 64) {
-        printf("Matrix %d - ", dim);
+    for (int dim = min_dim; dim <= max_dim; dim += 128) {
+        printf("Matrix %d (Tensor) - ", dim);
         cudaEventRecord(gpu_start);
 
         #ifdef USE_SOCKET
         // START,datatype,dim_size,tensor
         // eg. START,half,256,tensor
-        msg = "START," + get_datatype(h_A) + "," + std::to_string(dim) + ",tensor";
+        msg = "START," + get_datatype(h_A) + "," + std::to_string(dim) + ",tensor," + std::to_string(jetson_clocks::get_gpu_cur_freq());
         send(sock, msg.c_str(), strlen(msg.c_str()), 0);
         #endif
 
@@ -255,7 +261,11 @@ void benchmark(int sock, int min_dim, int max_dim) {
         msg = "DONE," + std::to_string(final_flops);
         send(sock, msg.c_str(), strlen(msg.c_str()), 0);
         #endif
+
+        printf("Sleeping between tests...\n");
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
     }
+
     printf("Done\n");
 
     cublasDestroy(handle);
@@ -278,7 +288,7 @@ int connect_socket() {
     }
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(8888);
-    if (inet_pton(AF_INET, "192.168.1.21", &serv_addr.sin_addr) <= 0) {
+    if (inet_pton(AF_INET, "192.168.1.20", &serv_addr.sin_addr) <= 0) {
         printf("Invalid address\n");
         return -1;
     }
@@ -291,8 +301,31 @@ int connect_socket() {
     return sock;
 }
 
+void benchmark_datatypes(int sock, int min_dim, int max_dim) {
+    printf("Starting HALF\n");
+    benchmark<__half>(sock, min_dim, max_dim);
+    printf("Done HALF\n\n");
+
+    printf("Long sleep between datatypes...\n");
+    std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+
+    printf("Starting FLOAT\n");
+    benchmark<float>(sock, min_dim, max_dim);
+    printf("Done FLOAT\n\n");
+
+    printf("Long sleep between datatypes...\n");
+    std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+
+    printf("Starting DOUBLE\n");
+    benchmark<double>(sock, min_dim, max_dim);
+    printf("Done DOUBLE\n\n");
+}
+
 int main() {
     setvbuf(stdout, NULL, _IONBF, 0);
+
+    int min_dim = 128;
+    int max_dim = 2048;
 
     #ifdef USE_SOCKET
     printf("Connecting to server... ");
@@ -304,31 +337,15 @@ int main() {
     printf("Connected\n");
     #endif
 
-    int min_dim = 64;
-    int max_dim = 4096;
-    printf("Starting HALF\n");
     #ifdef USE_SOCKET
-    benchmark<__half>(sock, min_dim, max_dim);
+    benchmark_datatypes(sock, min_dim, max_dim);
     #else
-    benchmark<__half>(0, min_dim, max_dim);
+    benchmark_datatypes(0, min_dim, max_dim);
     #endif
-    printf("Done HALF\n\n");
 
-    printf("Starting FLOAT\n");
-    #ifdef USE_SOCKET
-    benchmark<float>(sock, min_dim, max_dim);
-    #else
-    benchmark<float>(0, min_dim, max_dim);
-    #endif
-    printf("Done FLOAT\n\n");
+    printf("Extra long sleep between frequencies...\n");
+    std::this_thread::sleep_for(std::chrono::milliseconds(30000));
 
-    printf("Starting DOUBLE\n");
-    #ifdef USE_SOCKET
-    benchmark<double>(sock, min_dim, max_dim);
-    #else
-    benchmark<double>(0, min_dim, max_dim);
-    #endif
-    printf("Done DOUBLE\n\n");
 
     return 0;
 }
