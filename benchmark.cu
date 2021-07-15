@@ -288,7 +288,7 @@ int connect_socket() {
     }
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_port = htons(8888);
-    if (inet_pton(AF_INET, "192.168.1.20", &serv_addr.sin_addr) <= 0) {
+    if (inet_pton(AF_INET, "192.168.1.8", &serv_addr.sin_addr) <= 0) {
         printf("Invalid address\n");
         return -1;
     }
@@ -342,10 +342,6 @@ int main() {
     #else
     benchmark_datatypes(0, min_dim, max_dim);
     #endif
-
-    printf("Extra long sleep between frequencies...\n");
-    std::this_thread::sleep_for(std::chrono::milliseconds(30000));
-
 
     return 0;
 }
