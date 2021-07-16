@@ -197,7 +197,7 @@ void benchmark(int sock, int min_dim, int max_dim) {
     // https://forums.developer.nvidia.com/t/how-to-confirm-whether-tensor-core-is-working-or-not/70263/8
 
     // This is the "non-tensor" version using the individual cublas<t>gemm functions
-    for (int dim = min_dim; dim <= max_dim; dim += 128) {
+    for (int dim = min_dim; dim <= max_dim; dim += 64) {
         printf("Matrix %d (Non-tensor) - ", dim);
         cudaEventRecord(gpu_start);
 
@@ -227,12 +227,17 @@ void benchmark(int sock, int min_dim, int max_dim) {
         send(sock, msg.c_str(), strlen(msg.c_str()), 0);
         #endif
 
-        printf("Sleeping between tests...\n");
-        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-    }
+        printf("Small cooling between matrix size...\n");
+        jetson_clocks::set_fan_speed(255);
+        std::this_thread::sleep_for(std::chrono::milliseconds(15000));
+        jetson_clocks::set_fan_speed(0);
+        std::this_thread::sleep_for(std::chrono::milliseconds(4000));
 
-    // This is the "tensor" version using cublasGemmEx
-    for (int dim = min_dim; dim <= max_dim; dim += 128) {
+
+
+
+
+
         printf("Matrix %d (Tensor) - ", dim);
         cudaEventRecord(gpu_start);
 
@@ -262,8 +267,11 @@ void benchmark(int sock, int min_dim, int max_dim) {
         send(sock, msg.c_str(), strlen(msg.c_str()), 0);
         #endif
 
-        printf("Sleeping between tests...\n");
-        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+        printf("Small cooling between matrix size...\n");
+        jetson_clocks::set_fan_speed(255);
+        std::this_thread::sleep_for(std::chrono::milliseconds(15000));
+        jetson_clocks::set_fan_speed(0);
+        std::this_thread::sleep_for(std::chrono::milliseconds(4000));
     }
 
     printf("Done\n");
@@ -306,25 +314,39 @@ void benchmark_datatypes(int sock, int min_dim, int max_dim) {
     benchmark<__half>(sock, min_dim, max_dim);
     printf("Done HALF\n\n");
 
-    printf("Long sleep between datatypes...\n");
-    std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+    printf("Cooling down Jetson between datatypes\n");
+    jetson_clocks::set_fan_speed(255);
+    std::this_thread::sleep_for(std::chrono::milliseconds(90000));
+    jetson_clocks::set_fan_speed(0);
+    std::this_thread::sleep_for(std::chrono::milliseconds(4000));
 
     printf("Starting FLOAT\n");
     benchmark<float>(sock, min_dim, max_dim);
     printf("Done FLOAT\n\n");
 
-    printf("Long sleep between datatypes...\n");
-    std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+    printf("Cooling down Jetson between datatypes\n");
+    jetson_clocks::set_fan_speed(255);
+    std::this_thread::sleep_for(std::chrono::milliseconds(90000));
+    jetson_clocks::set_fan_speed(0);
+    std::this_thread::sleep_for(std::chrono::milliseconds(4000));
+
 
     printf("Starting DOUBLE\n");
     benchmark<double>(sock, min_dim, max_dim);
     printf("Done DOUBLE\n\n");
+
+    printf("Cooling down Jetson between datatypes\n");
+    jetson_clocks::set_fan_speed(255);
+    std::this_thread::sleep_for(std::chrono::milliseconds(90000));
+    jetson_clocks::set_fan_speed(0);
+    std::this_thread::sleep_for(std::chrono::milliseconds(4000));
+
 }
 
 int main() {
     setvbuf(stdout, NULL, _IONBF, 0);
 
-    int min_dim = 128;
+    int min_dim = 64;
     int max_dim = 2048;
 
     #ifdef USE_SOCKET
