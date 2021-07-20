@@ -11,7 +11,7 @@
 // This file measures the FLOPS that can be achieved by using gemm functions.
 // This is intended to measure performance when the GPU is at different frequencies.
 
-#define RUNTIME 20 // In seconds
+#define RUNTIME 30 // In seconds
 #define USE_SOCKET
 
 template <typename T>
@@ -316,7 +316,7 @@ void benchmark_datatypes(int sock, int min_dim, int max_dim) {
 
     printf("Cooling down Jetson between datatypes\n");
     jetson_clocks::set_fan_speed(255);
-    std::this_thread::sleep_for(std::chrono::milliseconds(90000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(60000));
     jetson_clocks::set_fan_speed(0);
     std::this_thread::sleep_for(std::chrono::milliseconds(4000));
 
@@ -326,7 +326,7 @@ void benchmark_datatypes(int sock, int min_dim, int max_dim) {
 
     printf("Cooling down Jetson between datatypes\n");
     jetson_clocks::set_fan_speed(255);
-    std::this_thread::sleep_for(std::chrono::milliseconds(90000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(60000));
     jetson_clocks::set_fan_speed(0);
     std::this_thread::sleep_for(std::chrono::milliseconds(4000));
 
@@ -334,13 +334,6 @@ void benchmark_datatypes(int sock, int min_dim, int max_dim) {
     printf("Starting DOUBLE\n");
     benchmark<double>(sock, min_dim, max_dim);
     printf("Done DOUBLE\n\n");
-
-    printf("Cooling down Jetson between datatypes\n");
-    jetson_clocks::set_fan_speed(255);
-    std::this_thread::sleep_for(std::chrono::milliseconds(90000));
-    jetson_clocks::set_fan_speed(0);
-    std::this_thread::sleep_for(std::chrono::milliseconds(4000));
-
 }
 
 int main() {
