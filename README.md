@@ -114,5 +114,6 @@ $ sudo ./gpu_benchmark
 # TODO
 - Start work on Nano
   - Flops/Watt for all frequencies (square matricies)
+    - TODO: 76800000 153600000 230400000 307200000 384000000 460800000 537600000 614400000 691200000 768000000 844800000 921600000
   - Flops/Watt for most efficient & highest (non-square)
 - Triton Inference on AGX/Nano
