@@ -84,12 +84,6 @@ Setting the GPU frequency:
 AGX$ echo "1377000000" | sudo tee /sys/devices/17000000.gv11b/devfreq/17000000.gv11b/{min,max}_freq
 ```
 
-**Note** On the AGX, the fan ramp speed needs to be changed to make the fan more responsive when set.
-
-```
-AGX$ echo "5" | sudo tee /sys/devices/pwm-fan/step_time
-```
-
 ## Nano
 
 Set the CPU frequency:
@@ -102,6 +96,12 @@ Set the GPU frequency:
 ```
 # All available frequencies: 76800000 153600000 230400000 307200000 384000000 460800000 537600000 614400000 691200000 768000000 844800000 921600000
 Nano$ echo "921600000" | sudo tee /sys/devices/gpu.0/devfreq/57000000.gpu/{min,max}_freq
+```
+
+**Note** The fan ramp speed needs to be changed to make the fan more responsive when set.
+
+```
+$ echo "5" | sudo tee /sys/devices/pwm-fan/step_time
 ```
 
 After the GPU and CPU frequencies have been set, the benchmark can be run.
