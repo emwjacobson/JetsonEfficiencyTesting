@@ -115,4 +115,6 @@ $ sudo ./gpu_benchmark
 - Start work on Nano
   - Flops/Watt for all frequencies (square matricies)
   - Flops/Watt for most efficient & highest (non-square)
+    - Efficient (770MHz)
+    - Max (922MHz)
 - Triton Inference on AGX/Nano
