@@ -327,9 +327,9 @@ void benchmark(int sock, int min_rows, int max_rows, int step_rows, int min_cols
 
         // printf("Small cooling between matrix size...\n");
         // jetson_clocks::set_fan_speed(255);
-        // std::this_thread::sleep_for(std::chrono::milliseconds(15000));
-        // jetson_clocks::set_fan_speed(0);
         // std::this_thread::sleep_for(std::chrono::milliseconds(4000));
+        // jetson_clocks::set_fan_speed(0);
+        // std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
 
 
@@ -367,9 +367,9 @@ void benchmark(int sock, int min_rows, int max_rows, int step_rows, int min_cols
 
         printf("Small cooling between matrix size...\n");
         jetson_clocks::set_fan_speed(255);
-        std::this_thread::sleep_for(std::chrono::milliseconds(15000));
-        jetson_clocks::set_fan_speed(0);
         std::this_thread::sleep_for(std::chrono::milliseconds(4000));
+        jetson_clocks::set_fan_speed(0);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
 
     printf("Done\n");
@@ -423,11 +423,11 @@ void benchmark_datatypes(int sock, int min_rows, int max_rows, int step_rows, in
     benchmark<float>(sock, min_rows, max_rows, step_rows, min_cols, max_cols, step_cols, square);
     printf("Done FLOAT\n\n");
 
-    printf("Cooling down Jetson between datatypes\n");
-    jetson_clocks::set_fan_speed(255);
-    std::this_thread::sleep_for(std::chrono::milliseconds(60000));
-    jetson_clocks::set_fan_speed(0);
-    std::this_thread::sleep_for(std::chrono::milliseconds(4000));
+    // printf("Cooling down Jetson between datatypes\n");
+    // jetson_clocks::set_fan_speed(255);
+    // std::this_thread::sleep_for(std::chrono::milliseconds(60000));
+    // jetson_clocks::set_fan_speed(0);
+    // std::this_thread::sleep_for(std::chrono::milliseconds(4000));
 
 
     // printf("Starting DOUBLE\n");
