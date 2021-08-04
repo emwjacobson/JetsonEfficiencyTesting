@@ -284,10 +284,10 @@ void benchmark(int sock, int min_rows, int max_rows, int step_rows, int min_cols
             send(sock, msg.c_str(), strlen(msg.c_str()), 0);
             #endif
 
-            printf("Small cooling between matrix size...\n");
-            jetson_clocks::set_fan_speed(255);
-            std::this_thread::sleep_for(std::chrono::milliseconds(4000));
-            jetson_clocks::set_fan_speed(0);
+            printf("Small wait between matrix size...\n");
+            // jetson_clocks::set_fan_speed(255);
+            // std::this_thread::sleep_for(std::chrono::milliseconds(4000));
+            // jetson_clocks::set_fan_speed(0);
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         }
     }
