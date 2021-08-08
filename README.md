@@ -117,6 +117,4 @@ $ sudo ./gpu_benchmark
   - Flops/Watt for most efficient & highest (non-square)
     - Rows [64-1024] step=64
     - Cols [8-2048] step=8
-    - Efficient (770MHz) TODO Rows: [128, 192, 256, 320, 384, 448, 512, 675, 640, 704, 768, 832, 896, 960, 1024]
-    - Max (922MHz) TODO Rows: [64, 128, 192, 256, 320, 384, 448, 512, 675, 640, 704, 768, 832, 896, 960, 1024]
 - Triton Inference on AGX/Nano
