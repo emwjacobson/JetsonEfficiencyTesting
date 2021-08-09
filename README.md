@@ -112,9 +112,6 @@ $ sudo ./gpu_benchmark
 
 
 # TODO
-- Start work on Nano
-  - Flops/Watt for all frequencies (square matricies)
-  - Flops/Watt for most efficient & highest (non-square)
-    - Rows [64-1024] step=64
-    - Cols [8-2048] step=8
 - Triton Inference on AGX/Nano
+  - https://github.com/triton-inference-server/server/releases/tag/v2.12.0
+  - https://github.com/triton-inference-server/server/blob/main/docs/quickstart.md
