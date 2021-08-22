@@ -2,7 +2,8 @@
 
 - [Inference Testing](#inference-testing)
   - [Jetson Setup](#jetson-setup)
-  - [Client Setup](#client-setup)
+  - [Downloading the Triton Inference Server](#downloading-the-triton-inference-server)
+  - [Perf Analyzer](#perf-analyzer)
 
 ## Jetson Setup
 
@@ -10,52 +11,22 @@ As of Triton release [2.12.0](https://github.com/triton-inference-server/server/
 
 The `tritonserver2.12.0-jetpack4.6.tgz` file must be downloaded from the [release notes](https://github.com/triton-inference-server/server/releases/tag/v2.12.0) and extracted on the Jetson device.
 
+
+## Downloading the Triton Inference Server
+
 **Be sure to also install the dependencies listed in the notes before running!**
 
-The triton server git repo can also be cloned in the same directory to help with the downloading of models.
-
-`$ git clone https://github.com/triton-inference-server/server.git`
-
-Then models downloaded by running:
-
-```
-$ cd server/docs/examples/
-$ ./fetch_models.sh
-```
+The inference server and models can be easily downloaded by running the `setup.sh` script.
 
 Finally the inference server can be ran by running:
 
-`$ ./bin/tritonserver --model-repository=./server/docs/examples/model_repository/ --backend-directory=./backends/ --backend-config=tensorflow,version=2`
-
-This should create a GRPC server on port 8001, and an HTTP server on port 8000.
-
-## Client Setup
-
-Create a virtual environment for Python to run in:
-
-`$ python3.8 -m venv .venv`
-
-Activate the virtual environment
-
-`$ source .venv/bin/activate`
-
-Update pip and setuptools
-
-`$ pip install --upgrade pip setuptools`
-
-Install requirements
-
-```
-$ pip install nvidia-pyindex
-$ pip install tritonclient[all]
-$ pip install pillow attrdict
-```
+`$ ./tritonserver/bin/tritonserver --model-repository=./models/ --backend-directory=./tritonserver/backends/ --backend-config=tensorflow,version=2`
 
 ## Perf Analyzer
 
 The perf analyzer can be used to measure inference performance.
 
-`$ ./clients/bin/perf_analyzer -m densenet_onnx --service-kind=triton_c_api --triton-server-directory=. --model-repository=./server/docs/examples/model_repository --concurrency-range 4:16:4 -p 20000`
+`$ ./tritonserver/clients/bin/perf_analyzer -m mobilenet --triton-server-directory=./tritonserver --model-repository=./models/ --service-kind=triton_c_api`
 
 https://github.com/triton-inference-server/client
 https://github.com/triton-inference-server/client/tree/main/src/python/examples
@@ -66,12 +37,29 @@ https://github.com/onnx/models
 
 TODO:
 - Figure out what model(s) to use for testing
-  - AlexNet, GoogleNet, and ResNet-50 (Good for DLAs according to https://www.assured-systems.com/us/news/article/nvidia-jetson-agx-xavier-for-new-era-of-ai-in-robotics/)
-  - Image, Text, Mnist
-  - 5-7 nets
+  - AlexNet
+    - Almost fills ram, but works (might need to reboot beforehand) (3.8/4GB RAM)
+    - ~ 1.2GB GPU RAM
+  - MobileNet
+    - Pretty lightweight
+    - ~775MB GPU RAM
+  - GoogLeNet
+    - Gets to 3.5/4GB full system RAM usage
+    - ~1.5GB GPU RAM
+  - TinyYolov2
+    - Gets to 3.4/4GB full system RAM usage
+    - ~1.2GB GPU RAM
+  - Yolov4
+    - Pretty large model, has to use swap (3.7GB system + 1.5GB swap)
+    - ~2.2GB GPU RAM
+  - MNIST
+    - Small model, 2.6/4GB full system RAM usage
+    - ~640MB GPU RAM
 - Determine concurrency range
 - Convert model to TensorRT engine
   - Test on GPU and DLAs
+- Shared Memory settings in perf_analyzer: system/cuda/none
+  - Not enabled in the C engine :/
 
 - Inference Server
 - Power usage

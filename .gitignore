@@ -4,3 +4,5 @@ build/
 backup.cu
 backup/
 *.onnx
+triton/tritonserver/
+triton/tritonserver.tgz

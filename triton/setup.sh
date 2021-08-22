@@ -1,5 +1,12 @@
 #!/bin/bash
 
+download_triton() {
+  wget -nc 'https://github.com/triton-inference-server/server/releases/download/v2.12.0/tritonserver2.12.0-jetpack4.6.tgz' -O tritonserver.tgz;
+  mkdir tritonserver;
+  tar -xvf tritonserver.tgz tritonserver/
+  cp tritonserver/bin/tritonserver tritonserver/
+}
+
 # Image Classification
 download_alexnet() {
   mkdir -p models/alexnet/1/;
@@ -37,6 +44,8 @@ download_mnist() {
 
 
 download_all() {
+  download_triton;
+
   download_alexnet;
   download_mobilenet;
   download_googlenet;
