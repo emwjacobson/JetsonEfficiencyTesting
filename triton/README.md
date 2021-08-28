@@ -19,7 +19,7 @@ The inference server and models can be easily downloaded by running the `setup.s
 
 Finally the inference server can be ran by running:
 
-`$ ./tritonserver/bin/tritonserver --model-repository=./models/ --backend-directory=./tritonserver/backends/ --backend-config=tensorflow,version=2`
+`$ ./tritonserver/bin/tritonserver --model-repository=./models/ --backend-directory=./tritonserver/backends/ --backend-config=tensorflow,version=2 --model-control-mode=explicit --load-model=mobilenet`
 
 ## Perf Analyzer
 
