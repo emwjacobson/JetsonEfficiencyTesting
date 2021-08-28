@@ -3,8 +3,9 @@
 download_triton() {
   wget -nc 'https://github.com/triton-inference-server/server/releases/download/v2.12.0/tritonserver2.12.0-jetpack4.6.tgz' -O tritonserver.tgz;
   mkdir tritonserver;
-  tar -xvf tritonserver.tgz tritonserver/
-  cp tritonserver/bin/tritonserver tritonserver/
+  tar -xvf tritonserver.tgz -C tritonserver/;
+  cp tritonserver/bin/tritonserver tritonserver/;
+  rm tritonserver.tgz;
 }
 
 # Image Classification
