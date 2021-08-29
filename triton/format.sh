@@ -17,5 +17,6 @@ do
 
 write-n "$i,";
 write $(tail -n 1 data/$i.csv);
+rm data/$i.csv;
 
 done

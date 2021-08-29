@@ -43,23 +43,9 @@ https://github.com/triton-inference-server/server/blob/main/docs/perf_analyzer.m
 https://github.com/onnx/models
 
 TODO:
-- Figure out what model(s) to use for testing
-  - AlexNet
-    - Almost fills ram, but works (might need to reboot beforehand) (3.8/4GB RAM)
-    - ~ 1.2GB GPU RAM
-  - MobileNet
-    - Pretty lightweight
-    - ~775MB GPU RAM
-  - GoogLeNet
-    - Gets to 3.5/4GB full system RAM usage
-    - ~1.5GB GPU RAM
-  - TinyYolov2
-    - Gets to 3.4/4GB full system RAM usage
-    - ~1.2GB GPU RAM
-  - Yolov4
-    - Pretty large model, has to use swap (3.7GB system + 1.5GB swap)
-    - ~2.2GB GPU RAM
-  - MNIST
-    - Small model, 2.6/4GB full system RAM usage
-    - ~640MB GPU RAM
-- Batch sizes
+- Nano
+  - Efficient Frequency(s)
+- AGX
+  - Max Frequency
+  - Efficient Frequency(s)
+- Convert to TensorRT model?
