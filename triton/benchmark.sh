@@ -8,7 +8,7 @@ write () {
 
 write "Start,End,Batch Size";
 
-for i in {1..16}
+for i in {1..32}
 do
   START=$(date +%s%3N)
   ./tritonserver/clients/bin/perf_analyzer --shared-memory=system -m mobilenet -b $i -f data/$i.csv
