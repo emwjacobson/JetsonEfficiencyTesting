@@ -47,8 +47,11 @@ https://github.com/onnx/models
 
 TODO:
 - Nano
+  - Rerun Max Frequency (Longer tests, reach power plateau)
   - Efficient Frequency(s)
+  - TensorRT
 - AGX
   - Max Frequency
   - Efficient Frequency(s)
+  - TensorRT
 - Convert to TensorRT model?
