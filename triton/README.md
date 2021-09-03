@@ -42,8 +42,8 @@ https://github.com/triton-inference-server/server/blob/main/docs/perf_analyzer.m
 
 https://github.com/onnx/models
 
-`/usr/src/tensorrt/bin/trtexec --onnx=models/mobilenet/1/model.onnx --saveEngine=mobilenet_engine.trt --device=0 --allowGPUFallback`
-`/usr/src/tensorrt/bin/trtexec --onnx=models/mobilenet/1/model.onnx --saveEngine=mobilenet_engine.trt --useFLACore=0`
+`/usr/src/tensorrt/bin/trtexec --onnx=models/mobilenet/1/model.onnx --saveEngine=mobilenet_engine.trt --device=0`
+`/usr/src/tensorrt/bin/trtexec --onnx=models/mobilenet/1/model.onnx --saveEngine=mobilenet_engine.trt --useDLACore=0 --allowGPUFallback`
 
 TODO:
 - Nano
