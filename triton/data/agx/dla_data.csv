@@ -1,0 +1,2 @@
+Batch Size,Concurrency,Inferences/Second,Client Send,Network+Server Send/Recv,Server Queue,Server Compute Input,Server Compute Infer,Server Compute Output,Client Recv,p50 latency,p90 latency,p95 latency,p99 latency
+1,1,171.133,157,619,41,274,4642,105,0,5821,6076,6137,6266
