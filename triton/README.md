@@ -46,11 +46,6 @@ https://github.com/onnx/models
 `/usr/src/tensorrt/bin/trtexec --onnx=models/mobilenet/1/model.onnx --saveEngine=mobilenet_engine.trt --useDLACore=0 --allowGPUFallback`
 
 TODO:
-- Nano
-  - Efficient Frequency(s)
-  - TensorRT
 - AGX
-  - Max Frequency
   - Efficient Frequency(s)
   - TensorRT
-- Convert to TensorRT model?
