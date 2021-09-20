@@ -48,7 +48,7 @@ https://github.com/onnx/models
 TODO:
 - AGX
   - Fixed batch, varying frequency
-  - Batch Sizes: 1, 2, 4, 8
+  - Batch Sizes: 2, 4, 8
 - Nano
   - Fixed batch, varying frequency
   - Batch Sizes: 1, 2, 4, 8
