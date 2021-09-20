@@ -44,7 +44,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
                 f.write(data[1])
 
             print(f"DONE {data[1]} FLOPS!")
-            
+
 def listen_power(name):
     with serial.Serial(POWER_PORT, 115200) as s, open(name, "w") as f:
         s.write("#L,W,3,E,,{};".format(int(1)).encode('ascii'))
@@ -72,11 +72,13 @@ def listen_power(name):
                 msg = f"{m['time']},{m['watts']}"
                 print(msg)
                 f.write(msg+"\n")
-                
+            f.flush()
+
 
 
 HOST, PORT = "", 8888
 if __name__ == "__main__":
-    with socketserver.TCPServer((HOST, PORT), MyTCPHandler) as server:
-        print("Waiting for connections")
-        server.serve_forever()
+    listen_power("data.csv")
+    # with socketserver.TCPServer((HOST, PORT), MyTCPHandler) as server:
+    #     print("Waiting for connections")
+    #     server.serve_forever()
