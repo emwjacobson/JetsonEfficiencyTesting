@@ -15,9 +15,10 @@ echo "1479000" | sudo tee /sys/devices/system/cpu/cpu0/cpufreq/scaling_{min,max}
 
 for freq in "${FREQUENCIES[@]}"
 do
-  echo $freq | sudo tee /sys/devices/gpu.0/devfreq/57000000.gpu/{min,max}_freq
+  echo $freq | sudo tee /sys/devices/gpu.0/devfreq/57000000.gpu/{max,min}_freq
+  echo $freq | sudo tee /sys/devices/gpu.0/devfreq/57000000.gpu/{max,min}_freq
   START=$(date +%s%3N)
-  ./tritonserver/clients/bin/perf_analyzer --shared-memory=system -m mobilenet -b $BATCH -f data/$freq.csv -p 15000
+  ./tritonserver/clients/bin/perf_analyzer --shared-memory=system -m mobilenet -b 1 -f data/$freq.csv -p 15000
   END=$(date +%s%3N)
 
   write "$START,$END,$freq"
