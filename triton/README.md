@@ -47,5 +47,3 @@ https://github.com/onnx/models
 
 TODO:
 - AGX
-  - Efficient Frequency(s)
-  - TensorRT
