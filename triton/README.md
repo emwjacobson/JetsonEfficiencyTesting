@@ -36,6 +36,7 @@ If you **are** running the triton server in another instance, this command can b
 ## In Progress Work
 
 https://github.com/triton-inference-server/client
+
 https://github.com/triton-inference-server/client/tree/main/src/python/examples
 
 https://github.com/triton-inference-server/server/blob/main/docs/perf_analyzer.md
@@ -48,7 +49,7 @@ https://github.com/onnx/models
 TODO:
 - AGX
   - Fixed batch, varying frequency
-  - Batch Sizes: 2, 4, 8
+  - Batch Sizes: 1, 2, 4, 8, 16, 32
 - Nano
   - Fixed batch, varying frequency
-  - Batch Sizes: 1, 2, 4, 8
+  - Batch Sizes: 2, 4, 8, 16, 32
