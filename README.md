@@ -113,14 +113,7 @@ $ sudo ./gpu_benchmark
 
 
 # TODO
-- Triton Inference on AGX/Nano
-  - https://github.com/triton-inference-server/server/releases/tag/v2.12.0
-  - https://github.com/triton-inference-server/server/blob/main/docs/quickstart.md
-
-- Execution time
-- Switch AGX Square axes
 - Heatmap for Rectangular
 	- xy rows/cols
 	- coords shows flops
-- seaborne
-- convolution kernel - benchmark
+- Swap Frequency and Matrix size for Nano/AGX Square

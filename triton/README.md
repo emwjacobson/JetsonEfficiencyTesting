@@ -47,9 +47,3 @@ https://github.com/onnx/models
 `/usr/src/tensorrt/bin/trtexec --onnx=models/mobilenet/1/model.onnx --saveEngine=mobilenet_engine.trt --useDLACore=0 --allowGPUFallback`
 
 TODO:
-- AGX
-  - Fixed batch, varying frequency
-  - Batch Sizes: 1, 2, 4, 8, 16, 32
-- Nano
-  - Fixed batch, varying frequency
-  - Batch Sizes: 2, 4, 8, 16, 32
