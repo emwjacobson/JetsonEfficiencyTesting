@@ -113,7 +113,12 @@ $ sudo ./gpu_benchmark
 
 
 # TODO
-- Heatmap for Rectangular
-	- xy rows/cols
-	- coords shows flops
-- Swap Frequency and Matrix size for Nano/AGX Square
+- Square graphs, powers of 2 only
+- FLOPS 2nd graphs
+- Inference 1st and 3rd graphs
+- Export graphs
+- Talk about architecture of Nano and AGX
+	- GPU, DLAs
+	- DFVS
+	- FLOPS benchmark
+	- Inference Server
