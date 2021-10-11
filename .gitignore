@@ -6,3 +6,4 @@ backup/
 *.onnx
 triton/tritonserver/
 triton/tritonserver.tgz
+export/

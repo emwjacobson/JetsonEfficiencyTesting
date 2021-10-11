@@ -113,10 +113,10 @@ $ sudo ./gpu_benchmark
 
 
 # TODO
-- Square graphs, powers of 2 only
-- FLOPS 2nd graphs
-- Inference 1st and 3rd graphs
-- Export graphs
+- ~~Square graphs, powers of 2 only~~
+- ~~FLOPS 2nd graphs~~
+- ~~Inference 1st and 3rd graphs~~
+- ~~Export graphs~~
 - Talk about architecture of Nano and AGX
 	- GPU, DLAs
 	- DFVS
