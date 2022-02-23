@@ -361,7 +361,7 @@ void benchmark(int sock, int min_rows, int max_rows, int step_rows, int min_cols
         printf("%f FLOPS (%f seconds, %d iterations)\n", final_flops, (time_ms / 1000.0), num_iterations);
 
         #ifdef USE_SOCKET
-        msg = "DONE," + std::to_string(final_flops) + "," + std::to_string(num_iterations) + "," + std::to_string(final_time);
+        msg = "DONE," + std::to_string(final_flops) + "," + std::to_string(num_iterations) + "," + std::to_string(time_ms / 1000.0);
         send(sock, msg.c_str(), strlen(msg.c_str()), 0);
         #endif
 

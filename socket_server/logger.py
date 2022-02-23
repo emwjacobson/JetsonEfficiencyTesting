@@ -41,7 +41,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
             monitor.join(timeout=1)
             with open(name, "a") as f:
                 f.seek(0)
-                f.write(data[1] + "," + data[2] + "," data[3])
+                f.write(data[1] + "," + data[2] + "," + data[3])
 
             print(f"DONE {data[1]} FLOPS, {data[2]} ITERATIONS")
 
@@ -75,7 +75,7 @@ def listen_power(name):
             f.flush()
 
 # TODO
-# 76800000 153600000 [230400000] 307200000 384000000
+# 76800000 153600000 230400000 307200000 384000000 460800000 537600000 614400000 691200000 768000000 844800000 [921600000]
 
 HOST, PORT = "", 8888
 if __name__ == "__main__":
