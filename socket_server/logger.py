@@ -41,9 +41,9 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
             monitor.join(timeout=1)
             with open(name, "a") as f:
                 f.seek(0)
-                f.write(data[1])
+                f.write(data[1] + "," + data[2])
 
-            print(f"DONE {data[1]} FLOPS!")
+            print(f"DONE {data[1]} FLOPS, {data[2]} ITERATIONS")
 
 def listen_power(name):
     with serial.Serial(POWER_PORT, 115200) as s, open(name, "w") as f:
