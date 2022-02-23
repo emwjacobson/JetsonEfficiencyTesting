@@ -25,7 +25,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
             print(f"STARTING {'-'.join(data[1:])}")
 
             LISTEN = True
-            name = f"AGX-{'-'.join(data[1:])}.data"
+            name = f"Nano-{'-'.join(data[1:])}.data"
             monitor = threading.Thread(target=listen_power, args=(name,))
             monitor.start()
 
@@ -41,7 +41,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
             monitor.join(timeout=1)
             with open(name, "a") as f:
                 f.seek(0)
-                f.write(data[1] + "," + data[2])
+                f.write(data[1] + "," + data[2] + "," data[3])
 
             print(f"DONE {data[1]} FLOPS, {data[2]} ITERATIONS")
 
@@ -74,7 +74,8 @@ def listen_power(name):
                 f.write(msg+"\n")
             f.flush()
 
-
+# TODO
+# 76800000 153600000 [230400000] 307200000 384000000
 
 HOST, PORT = "", 8888
 if __name__ == "__main__":
