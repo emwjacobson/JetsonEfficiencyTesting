@@ -78,7 +78,7 @@ def listen_power(name):
 
 HOST, PORT = "", 8888
 if __name__ == "__main__":
-    listen_power("data.csv")
-    # with socketserver.TCPServer((HOST, PORT), MyTCPHandler) as server:
-    #     print("Waiting for connections")
-    #     server.serve_forever()
+    # listen_power("data.csv")
+    with socketserver.TCPServer((HOST, PORT), MyTCPHandler) as server:
+        print("Waiting for connections")
+        server.serve_forever()
