@@ -1,6 +1,6 @@
 import os
 
-path = "../data/AGX/"
+path = "../data/Nano/square_all_frequency/"
 files = os.listdir(path)
 
 data = []
@@ -18,7 +18,9 @@ for file_name in files:
                 print("Error in power data:", file_name)
             else:
                 ts, power = pd.split(",")
+                if float(power) <= 2:
+                    print("Power error?", file_name)
 
-        # flops should be the last line, with a single float number
-        if "," in flops:
-            print("Error in FLOPS:", file_name)
+        # flops, time, and num_inferences should be the last line
+        if len(flops.split(',')) != 3:
+            print("Error in last line", file_name)

@@ -13,7 +13,7 @@ matrix_filename = './data/{device}/square_all_frequency/{device}-float-{m_size}-
 def format_matrix(device: str):
   with open(F"{device}_matrix.csv", 'w') as csv_out:
     csv_writer = csv.writer(csv_out)
-    csv_writer.writerow(['Matrix Size', 'GPU Frequency', 'Average Watts', 'FLOPS'])
+    csv_writer.writerow(['Matrix Size', 'GPU Frequency', 'Average Watts', 'FLOPS', 'Iterations', 'Seconds'])
     for f in FREQ[device]:
       for size in SQUARE_SIZES:
         print(matrix_filename.format(device=device, m_size=size, freq=f))
@@ -21,7 +21,8 @@ def format_matrix(device: str):
           lines = data.readlines()
           power_data = [float(l.split(',')[1].strip()) for l in lines[1:-1]]
           avg_power = sum(power_data)/len(power_data)
-          csv_writer.writerow([size, f, avg_power, lines[-1]])
+          flops, iterations, seconds = lines[-1].split(',')
+          csv_writer.writerow([size, f, avg_power, flops, iterations, seconds])
 
 
 
