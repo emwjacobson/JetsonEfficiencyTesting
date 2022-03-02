@@ -25,7 +25,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
             print(f"STARTING {'-'.join(data[1:])}")
 
             LISTEN = True
-            name = f"Nano-{'-'.join(data[1:])}.data"
+            name = f"AGX-{'-'.join(data[1:])}.data"
             monitor = threading.Thread(target=listen_power, args=(name,))
             monitor.start()
 
@@ -75,7 +75,7 @@ def listen_power(name):
             f.flush()
 
 # TODO
-#
+# 
 
 HOST, PORT = "", 8888
 if __name__ == "__main__":

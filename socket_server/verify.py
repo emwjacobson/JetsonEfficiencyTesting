@@ -1,6 +1,6 @@
 import os
 
-path = "../data/Nano/square_all_frequency/"
+path = "../data/AGX/square_all_frequency/"
 files = os.listdir(path)
 
 data = []
