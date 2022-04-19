@@ -45,8 +45,6 @@ def format_ml_batch(device: str):
           avg_power = sum(power_temp)/len(power_temp)
           csv_writer.writerow([f_based[2], b_size, data[i][2], avg_power, data[i][3], data[i][4], data[i][5], data[i][6], data[i][7], data[i][8], data[i][9], data[i][10], data[i][11], data[i][12], data[i][13]])
 
-
-
 specific_f = {
   "agx": [905250000, 1377000000],
   "nano": [691200000, 768000000]
@@ -55,8 +53,26 @@ specific_f = {
 def format_ml_fixed(device: str):
   pass
 
+
+xgboost_filename = './data/{device}/xgboost/{size}_{frequency}.data'
+
+def format_xgboost(device: str):
+  with open(F"{device}_xgboost.csv", 'w') as csv_out:
+    csv_writer = csv.writer(csv_out)
+    csv_writer.writerow(['Data Size', 'GPU Frequency', 'Duration', 'Avg Watts'])
+    for f in FREQ[device]:
+      for m_size in ["0.1", "1", "10"]:
+        print(xgboost_filename.format(device=device, size=m_size, frequency=f))
+        with open(xgboost_filename.format(device=device, size=m_size, frequency=f)) as data:
+          lines = data.readlines()
+          power_data = [float(l.split(',')[1].strip()) for l in lines[1:-1]]
+          avg_power = sum(power_data)/len(power_data)
+          time = lines[-1]
+          csv_writer.writerow([m_size, f, time, avg_power])
+
 if __name__ == "__main__":
   # format_matrix("AGX")
   # format_matrix("Nano")
-  format_ml_batch("agx")
-  format_ml_batch("nano")
+  # format_ml_batch("agx")
+  # format_ml_batch("nano")
+  format_xgboost("AGX")
